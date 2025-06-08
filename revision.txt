@@ -1,0 +1,1185 @@
+  ____                   ____            _     _
+ / ___|    _     _      |  _ \ _____   _(_)___(_) ___  _ __
+| |      _| |_ _| |_    | |_) / _ \ \ / / / __| |/ _ \| '_ \
+| |___  |_   _|_   _|   |  _ <  __/\ V /| \__ \ | (_) | | | |
+ \____|   |_|   |_|     |_| \_\___| \_/ |_|___/_|\___/|_| |_|
+
+
+
+=====================================================================================
+I. CLASS/OOP
+
+a. Fundamental knowledge
+
+-----------------------------------------------------------------
+- Encapsulation
+    Giấu đi các thuộc tính, bảo vệ dữ liệu khỏi bị truy cập hoặc chỉnh sửa không mong muốn và chỉ cung cấp các thông tin cần thiết qua qua các phương thức public, các getter và setter.
+
+- Polymorphism
+    Cho phép một phương thức hoặc đối tượng có nhiều hình thức khác nhau
+
+- Inhertience
+    Tái sử dụng các thuộc tính và phương thức của lớp cha, cho phép mở rộng hoặc ghi đè hành vi của lớp cha
+
+- Abstraction
+    Cung cấp một thể hiện duy nhất, tập trung vào những điểm quan trọng và giấu đi các chi tiết không cần thiết
+
+---------------------------------------------------------------
+- Năm hàm mặc định (default special member functions)
+    * Việc cần tự cài đặt chúng hay không phụ thuộc vào việc Class của bạn có quản lý trực tiếp tài nguyên hay không (ví dụ: bộ nhớ heap, file handles, network sockets).
+    Default Constructor (Hàm tạo mặc định):
+        • Được gọi khi đối tượng được tạo mà không có đối số.
+        • Compiler sẽ tự tạo hàm tạo mặc định nếu lớp không có bất kỳ constructor nào được định nghĩa.
+
+    Destructor:
+        • Được gọi khi đối tượng bị hủy để giải phóng tài nguyên.
+        • Compiler tạo destructor mặc định nếu không được định nghĩa.
+
+    Copy Constructor:
+        • Được gọi khi khởi tạo đối tượng mới bằng cách sao chép từ một đối tượng đã tồn tại.
+        • Compiler sẽ tạo copy constructor mặc định nếu không có định nghĩa của người dùng.
+
+    Copy Assignment Operator:
+        • Được gọi khi gán giá trị từ một đối tượng sang đối tượng khác bằng toán tử =.
+
+    Move Constructor và Move Assignment Operator (C++11 trở lên):
+        • Move Constructor: Chuyển quyền sở hữu tài nguyên từ đối tượng nguồn sang đối tượng mới.
+        • Move Assignment Operator: Gán đối tượng bằng cách chuyển quyền sở hữu tài nguyên.
+
+---------------------------------------------------------------------
+b. Questions
+1. Phân biệt class và object?
+    - Định nghĩa:
+    Class: Là bản thiết kế hoặc khuôn mẫu để tạo ra các đối tượng.
+    Object: Là thực thể cụ thể được tạo ra từ một class.
+
+    - Bản chất:
+    Class: Là một khái niệm trừu tượng.
+    Object: Là một đối tượng thực tế trong chương trình.
+
+    - Bộ nhớ:
+    Class: Không chiếm bộ nhớ khi khai báo.
+    Object: Chiếm bộ nhớ khi được tạo ra.
+
+    - Vai trò:
+    Class: Định nghĩa cấu trúc và hành vi của đối tượng.
+    Object: Sử dụng cấu trúc và hành vi đã được định nghĩa bởi class.
+
+
+2. Constructor là gì?
+	• Constructor là một hàm được gọi tự động khi một đối tượng được khởi tạo.
+	• Mục đích: Dùng để khởi tạo giá trị ban đầu cho các thành viên của lớp.
+	• Đặc điểm:
+		○ Có cùng tên với lớp.
+		○ Không có kiểu trả về, kể cả void.
+		○ Có thể được nạp chồng (Overloading).
+
+3. Copy Constructor là gì?
+	• Copy Constructor là một constructor đặc biệt dùng để khởi tạo đối tượng mới từ một đối tượng đã tồn tại.
+	• Mục đích: Tạo bản sao của một đối tượng.
+	• Đặc điểm:
+		○ Có một tham số duy nhất là tham chiếu hằng tới đối tượng cùng loại (const ClassName&).
+		○ Được tự động cung cấp bởi trình biên dịch nếu không định nghĩa.
+
+4. Access Specifier là gì?
+    Access Specifier trong C++ xác định mức độ truy cập của các thành viên trong một lớp. Có 3 loại:
+        1. Public: Thành viên có thể truy cập từ bất kỳ đâu.
+        2. Private: Thành viên chỉ có thể truy cập từ bên trong lớp.
+        3. Protected: Thành viên truy cập được từ lớp cơ sở và lớp dẫn xuất.
+
+
+5. Phân biệt overloading và overriding?
+	• Overloading là kỹ thuật cho phép tạo nhiều hàm hoặc toán tử có cùng tên nhưng khác nhau về tham số, phạm vi trong cùng 1 class hoặc namespace. Điều này giúp tăng tính đa hình ở mức compile-time
+	• Overriding là việc cung cấp một định nghĩa mới cho phương thức được thừa kế từ lớp cơ sở, cho phép lớp dẫn xuất tùy chỉnh hành vi của phương thức đó, có phạm vi kế thừa giữa các lớp. Đây là một dạng runtime polymorphism
+
+6. Hãy giải thích tại sao destructor cần được khai báo là virtual trong các lớp cơ sở khi làm việc với đa hình?
+    Khi một lớp cơ sở có destructor không được khai báo là virtual, việc hủy đối tượng thông qua con trỏ lớp cơ sở sẽ chỉ gọi destructor của lớp cơ sở, mà không gọi destructor của lớp dẫn xuất.
+
+    Điều này dẫn đến leak bộ nhớ hoặc hành vi không mong muốn, đặc biệt nếu lớp dẫn xuất quản lý tài nguyên (như con trỏ, file, socket...).
+
+7. Khi nào cần virtual destructor?
+	• Cần: Khi lớp cơ sở được sử dụng làm interface hoặc có các lớp dẫn xuất sử dụng polymorphism.
+	• Không cần: Nếu lớp cơ sở không bao giờ được sử dụng làm con trỏ (hoặc tham chiếu) đến đối tượng dẫn xuất.
+
+9. Friend Class là gì?
+	• Một friend class là lớp được cấp quyền truy cập trực tiếp đến các thành viên private và protected của lớp khác.
+	• Được khai báo bằng từ khóa friend trong lớp được chia sẻ quyền.
+	• Mục đích: Dùng để tăng tính linh hoạt khi các lớp cần chia sẻ dữ liệu hoặc logic chặt chẽ.
+
+10. Friend Function là gì?
+	• Một friend function là hàm không phải thành viên của lớp nhưng có thể truy cập trực tiếp vào các thành viên private và protected của lớp đó.
+	• Cũng được khai báo bằng từ khóa friend.
+	• Mục đích: Dùng khi cần tương tác chặt chẽ với dữ liệu của lớp mà không cần làm thành viên của lớp.
+
+11. Hai loại chính của đa hình:
+	• Compile-time polymorphism
+	Ex: function overloading, operator overloading.
+	• Runtime polymorphism:
+	Ex: thông qua inheritance và virtual functions.
+
+12. Tại sao compiler biết hàm chưa override pure virtual function?
+    Từ khóa virtual sẽ kích hoạt tính đa hình, yêu cầu trình biên dịch tạo bảng vtable để ánh xạ các hàm virtual với phiên bản phù hợp với trong lớp dẫn xuất.
+    Đối với hàm pure virtual, compiler sẽ kiểm tra trong các lớp dẫn xuất đã ghi đè chưa
+    -> Nếu chưa thì compiler gắn cờ lớp dẫn xuất là abstract và báo lỗi nếu chúng ta cố gắng tạo đối tượng từ nó.
+
+13. Static data member và static member function là gì?
+    1. Static Data Member
+        • Biến thành viên (data member) khai báo với từ khóa static trong một lớp.
+        • Chỉ tồn tại một bản sao duy nhất của biến này được chia sẻ giữa tất cả các đối tượng của lớp.
+        • Biến này không thuộc về bất kỳ đối tượng cụ thể nào, mà thuộc về lớp.
+
+        • Đặc điểm:
+            ○ Không thể khởi tạo trong định nghĩa của lớp.
+            ○ Phải được khởi tạo bên ngoài lớp.
+            vd:
+                class MyClass
+                {
+                    static int count;
+                };
+                int MyClass::count = 0; // Khởi tạo static data member bên ngoài lớp
+            ○  Có thể truy cập qua đối tượng hoặc trực tiếp qua tên lớp.
+            ○  Dùng ClassName::member khi truy cập trực tiếp.
+        • Phạm vi sống:
+            Static data member tồn tại suốt chương trình, ngay cả khi không có đối tượng nào của lớp.
+
+    2. Static Member Function
+        • Hàm thành viên (member function) khai báo với từ khóa static trong một lớp.
+        • Hàm này không thể truy cập hoặc sử dụng các thành viên non-static (biến hoặc hàm) của lớp.
+        • Đặc điểm:
+            ○ Không cần đối tượng:
+            ○ Có thể gọi trực tiếp qua tên lớp mà không cần tạo đối tượng.
+            ○ Dùng cú pháp ClassName::functionName().
+
+        •Giới hạn:
+            Không thể sử dụng con trỏ this vì nó không thuộc bất kỳ đối tượng nào.
+            Chỉ có thể truy cập các thành viên static khác (biến hoặc hàm) của lớp.
+
+        • Phạm vi sử dụng:
+            Thường được dùng để thực hiện các thao tác không phụ thuộc vào bất kỳ đối tượng cụ thể nào của lớp.
+
+        • Ví dụ:
+            class Math
+            {
+            public:
+                static int add(int a, int b)
+                {
+                    return a + b;
+                }
+            };
+
+            int main()
+            {
+                std::cout << Math::add(3, 5); // Output: 8
+                return 0;
+            }
+
+    14. Khi nào sử dụng đa kế thừa?
+        • Khi bạn cần kết hợp các thuộc tính và hành vi từ nhiều lớp khác nhau.
+        • Khi bạn muốn tạo một lớp con có thể sử dụng các phương thức và thuộc tính của nhiều lớp cha.
+        • Khi bạn muốn tổ chức mã nguồn theo cách mà một lớp có thể kế thừa từ nhiều nguồn khác nhau.
+
+        vd:
+            class A
+            {
+            public:
+                void funcA() {}
+            };
+
+            class B
+            {
+            public:
+                void funcB() {}
+            };
+
+            class C : public A, public B
+            {
+            public:
+                void funcC()
+                {
+                    funcA(); // Gọi từ lớp A
+                    funcB(); // Gọi từ lớp B
+                }
+            };
+
+    15. Virtual inheritence là gì?
+        • Virtual inheritance là một kỹ thuật trong C++ để giải quyết vấn đề "diamond problem" (vấn đề kim cương) trong đa kế thừa.
+        • Khi một lớp kế thừa từ hai lớp cha mà cả hai đều kế thừa từ một lớp ông (grandparent), sẽ có hai bản sao của lớp ông trong lớp con.
+        • Virtual inheritance đảm bảo rằng chỉ có một bản sao duy nhất của lớp ông được tạo ra trong lớp con, giúp tránh sự mơ hồ và xung đột khi truy cập các thành viên của lớp ông.
+
+        vd:
+            class A
+            {
+            public:
+                void funcA() {}
+            };
+
+            class B : virtual public A
+            {
+            public:
+                void funcB() {}
+            };
+
+            class C : virtual public A
+            {
+            public:
+                void funcC() {}
+            };
+
+            class D : public B, public C
+            {
+            public:
+                void funcD()
+                {
+                    funcA(); // Gọi từ lớp A (chỉ có một bản sao)
+                }
+            };
+
+    16. Overloading destructor được không?
+        • Không thể overload destructor trong C++.
+        • Destructor không thể có tham số, vì nó được gọi tự động khi đối tượng bị hủy.
+        • Nếu bạn cần nhiều hành vi khác nhau khi hủy đối tượng, bạn có thể sử dụng các phương thức khác hoặc các tham số trong constructor.
+
+    17. Shallow copy và deep copy là gì?
+        • Shallow copy: Sao chép các giá trị của các biến thành viên, nhưng không sao chép các đối tượng con trỏ mà chỉ sao chép địa chỉ. Điều này có thể dẫn đến vấn đề khi nhiều đối tượng cùng chia sẻ một vùng nhớ.
+        • Ví dụ:
+            class MyClass
+            {
+            public:
+                int* data;
+                MyClass(int value) { data = new int(value); }
+                ~MyClass() { delete data; }
+            };
+
+            MyClass obj1(10);
+            MyClass obj2 = obj1;
+        -> obj2.data và obj1.data đều trỏ đến cùng một vùng nhớ
+        -> Khi obj1 bị hủy, obj2.data sẽ trỏ đến vùng nhớ đã bị giải phóng, dẫn đến undefined behavior.
+
+        • Deep copy: Sao chép cả giá trị và nội dung của các đối tượng con trỏ, tạo ra một bản sao hoàn toàn độc lập. Điều này giúp tránh các vấn đề liên quan đến việc chia sẻ bộ nhớ.
+        • Ví dụ:
+            class MyClass
+            {
+            public:
+                int* data;
+                MyClass(int value) { data = new int(value); }
+                MyClass(const MyClass& other) { data = new int(*other.data); } // Deep copy
+                ~MyClass() { delete data; }
+            };
+
+            MyClass obj1(10);
+            MyClass obj2 = obj1; // Gọi copy constructor
+        -> obj2.data sẽ trỏ đến một vùng nhớ mới, chứa giá trị 10.
+        -> Khi obj1 bị hủy, obj2.data vẫn còn hợp lệ và không bị ảnh hưởng.
+
+    18. So sánh struct và class và union?
+    - Struct:
+        • Là một kiểu dữ liệu dùng để nhóm các biến khác nhau lại với nhau.
+        • Mặc định, các thành viên của struct có phạm vi truy cập public.
+        • Thường được sử dụng để lưu trữ dữ liệu đơn giản.
+
+        vd:
+            struct Point
+            {
+                int x;
+                int y;
+            };
+    - Class:
+        • Là một kiểu dữ liệu phức tạp hơn, cho phép định nghĩa các thuộc tính và phương thức.
+        • Mặc định, các thành viên của class có phạm vi truy cập private.
+        • Hỗ trợ tính đa hình, kế thừa và đóng gói (encapsulation).
+
+        vd:
+            class Circle
+            {
+            private:
+                double radius;
+            public:
+                Circle(double r) : radius(r) {}
+                double area() { return 3.14 * radius * radius; }
+            };
+
+    - Union:
+        • Là một kiểu dữ liệu đặc biệt cho phép lưu trữ nhiều kiểu dữ liệu khác nhau trong cùng một vùng nhớ, nhưng chỉ có thể sử dụng một kiểu tại một thời điểm.
+        • Kích thước của union bằng kích thước của thành viên lớn nhất.
+        • Thường được sử dụng để tiết kiệm bộ nhớ khi cần lưu trữ các kiểu dữ liệu khác nhau.
+
+        vd:
+            union Data
+            {
+                int intValue;
+                float floatValue;
+                char charValue;
+            };
+        -> Chỉ có thể sử dụng một trong ba thành viên này tại một thời điểm.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====================================================================================
+II. MEMORY AND SYSTEM
+a. Fundamental knowledge
+
+-------------------------------------------------------------------------------
+Các vùng bộ nhớ:
+1. Code Segment (Text Segment)
+	• Mục đích: Lưu trữ mã lệnh chương trình (binaries) sau khi được biên dịch.
+	• Đặc điểm:
+		○ Là vùng chỉ đọc để bảo vệ mã chương trình tránh bị sửa đổi trong runtime.
+		○ Kích thước cố định, được xác định tại thời điểm biên dịch.
+
+2. Static/Global Segment (Data Segment)
+	- Initialized Data Segment
+	• Mục đích: Lưu trữ các biến toàn cục (global) hoặc static đã được khởi tạo giá trị.
+	• Đặc điểm: Bộ nhớ được cấp phát khi chương trình bắt đầu chạy và giải phóng khi chương trình kết thúc.
+	- Uninitialized Data Segment (BSS - Block Started by Symbol)
+	• Mục đích: Lưu trữ các biến toàn cục hoặc static chưa được khởi tạo.
+	• Đặc điểm: Được khởi tạo mặc định về giá trị 0.
+
+3. Stack
+	• Mục đích: Lưu trữ các biến cục bộ (local variables), các thông tin của hàm như địa chỉ trả về, tham số hàm, v.v.
+	• Đặc điểm:
+		○ Bộ nhớ cấp phát tự động khi một hàm được gọi và giải phóng khi hàm kết thúc.
+		○ Có kích thước hạn chế (phụ thuộc vào hệ thống).
+		○ Tăng/giảm vùng nhớ theo kiểu LIFO (Last In, First Out).
+
+4. Heap
+	• Mục đích: Lưu trữ bộ nhớ được cấp phát động bằng new/delete hoặc malloc/free.
+	• Đặc điểm:
+		○ Cần quản lý bộ nhớ thủ công, nếu không có thể dẫn tới memory leaks.
+		○ Có kích thước lớn hơn stack, nhưng tốc độ truy cập chậm hơn.
+
+5. CPU Registers
+	• Mục đích: Lưu trữ các biến và giá trị tạm thời cần tốc độ truy cập cực nhanh.
+	• Đặc điểm:
+		○ Dung lượng nhỏ, phụ thuộc vào kiến trúc CPU.
+		○ Không thể truy cập trực tiếp từ mã C++ (quản lý bởi trình biên dịch).
+	• Ví dụ: Trình biên dịch có thể tối ưu sử dụng thanh ghi cho các biến trong vòng lặp.
+
+--------------------------------------------------------------------------------
+Quá trình build chương trình C/C++:
+1. Preprocessing (Tiền xử lý)
+	• Tiền xử lý các chỉ thị bắt đầu bằng # (ví dụ: #include, #define, #ifdef).
+	• Tạo file mã nguồn trung gian chỉ chứa mã C/C++ sạch, không còn chỉ thị tiền xử lý.
+
+2. Compiling (Biên dịch)
+	• Chuyển mã nguồn trung gian thành mã assembly tương ứng với kiến trúc CPU.
+	• File output thường có phần mở rộng .s.
+
+3. Assembling (Dịch mã assembly)
+	• Chuyển mã assembly thành mã máy (machine code) mà CPU hiểu được.
+	• Tạo file object với phần mở rộng .o (Linux) hoặc .obj (Windows).
+
+4. Linking (Liên kết)
+	• Kết hợp các file object và thư viện (nếu có) thành file thực thi (.exe hoặc .out).
+	• Xử lý các tham chiếu chưa được định nghĩa, ví dụ: gọi đến các hàm trong thư viện (printf, std::cout).
+
+---------------------------------------------------------------------------------
+b. Questions
+1. So sánh new và malloc?
+    + Cấp phát bộ nhớ:
+    new: Cấp phát bộ nhớ và gọi constructor để khởi tạo đối tượng.
+    malloc: Chỉ cấp phát bộ nhớ; không gọi constructor.
+
+    + Giải phóng bộ nhớ:
+    new: Sử dụng delete để giải phóng và gọi destructor.
+    malloc: Sử dụng free để giải phóng; không gọi destructor.
+
+    + Kích thước bộ nhớ:
+    new: Tự động xác định kích thước từ kiểu dữ liệu.
+    malloc: Cần chỉ định rõ kích thước bộ nhớ (sử dụng sizeof).
+
+    + Kiểu trả về:
+    new: Trả về con trỏ đúng kiểu dữ liệu (type-safe).
+    malloc: Trả về con trỏ void* (không type-safe, cần cast kiểu).
+
+    + Xử lý lỗi:
+    new: Ném ngoại lệ std::bad_alloc nếu không cấp phát được.
+    malloc: Trả về nullptr nếu không cấp phát được.
+
+    + Custom Memory Allocators:
+    new: Có thể tùy chỉnh qua việc overload new/delete.
+    malloc: Không thể tùy chỉnh trực tiếp như new.
+
+2. So sánh delete và free?
+    delete: Giải phóng bộ nhớ và gọi destructor của đối tượng.
+    free: Chỉ giải phóng bộ nhớ mà không gọi destructor.
+
+    delete: Chỉ sử dụng cho bộ nhớ được cấp phát bằng new.
+    free: Chỉ sử dụng cho bộ nhớ được cấp phát bằng malloc.
+
+    delete: Có thể overload để tùy chỉnh hành vi giải phóng bộ nhớ.
+    free: Không thể overload.
+
+3. So sánh giữa Static và Dynamic Memory Allocation
+
+    + Thời điểm cấp phát:
+    Static: Cấp phát bộ nhớ tại thời điểm biên dịch (compile-time).
+    Dynamic: Cấp phát bộ nhớ tại thời điểm chạy (run-time).
+
+    + Vị trí bộ nhớ:
+    Static: Sử dụng bộ nhớ trên Stack hoặc Global Memory.
+    Dynamic: Sử dụng bộ nhớ trên Heap.
+
+    + Quản lý bộ nhớ:
+    Static: Quản lý bộ nhớ tự động bởi chương trình.
+    Dynamic: Quản lý bộ nhớ thủ công (sử dụng new/delete hoặc malloc/free).
+
+4. Điểm khác biệt giữa C và C++
+    Về phong cách lập trình, C++ thiên về hướng đối tượng, còn C sẽ là hướng thủ tục.
+    C chỉ hổ trợ quản lí bộ nhớ thủ công bằng cách dùng malloc và free, trong khi C++ cung cấp cả thủ công và tự động, với các từ khóa như new, delete,...
+    C++ hỗ trợ thêm class, throw exception, overloading và các thư viện STL.
+
+5. So sánh các phiên bản C++
+    Từ C++98 lên 11 -> Hỗ trợ smart pointer, lambda function, thêm unordered map, array,... Thêm thread và mutex
+    Từ C++11 lên C++14 hoặc C++17 -> Thêm make_unique, thêm các option cho lambda function
+
+6. Lỗi stack overflow là gì?
+    Lỗi stack overflow xảy ra khi chương trình sử dụng quá nhiều bộ nhớ trên stack, vượt quá giới hạn được hệ thống cấp phát. Stack là vùng nhớ dùng để lưu trữ các biến cục bộ và thông tin gọi hàm.
+
+7. Delete[] và delete khác nhau thế nào?
+    - delete:
+        Dùng để giải phóng bộ nhớ cho một đối tượng duy nhất được cấp phát bằng new.
+        -> Cách hoạt động:
+            Gọi destructor của đối tượng (nếu có).
+            Giải phóng bộ nhớ được cấp phát.
+        -> Cú pháp:
+            int* ptr = new int(42);
+            delete ptr; // Giải phóng bộ nhớ cho biến duy nhất
+
+
+    - delete[]:
+        Dùng để giải phóng bộ nhớ cho một mảng các đối tượng được cấp phát bằng new[].
+        -> Cách hoạt động:
+            Gọi destructor cho từng phần tử trong mảng (nếu có).
+            Giải phóng toàn bộ bộ nhớ được cấp phát cho mảng.
+        -> Cú pháp:
+            int* arr = new int[5]; // Cấp phát bộ nhớ cho mảng 5 phần tử
+            delete[] arr; // Giải phóng toàn bộ mảng
+
+8. Mutex và Semaphore là gì?
+    - Mutex (Mutual Exclusion):
+        • Là một cơ chế đồng bộ hóa dùng để bảo vệ tài nguyên chia sẻ khỏi truy cập đồng thời từ nhiều thread.
+        • Chỉ cho phép một thread sở hữu mutex tại một thời điểm, các thread khác sẽ phải chờ đến khi mutex được giải phóng.
+        • Ví dụ sử dụng mutex:
+            std::mutex mtx;
+            mtx.lock(); // Đặt mutex
+            // Thực hiện thao tác với tài nguyên chia sẻ
+            mtx.unlock(); // Giải phóng mutex
+
+    - Semaphore:
+        • Là một biến đếm dùng để quản lý truy cập đến một hoặc nhiều tài nguyên chia sẻ.
+        • Có thể cho phép nhiều thread truy cập đồng thời, tùy thuộc vào giá trị của semaphore.
+        • Ví dụ sử dụng semaphore:
+            std::counting_semaphore<5> sem(5); // Tạo semaphore với giá trị ban đầu là 5
+            sem.acquire(); // Giảm giá trị semaphore và chờ nếu giá trị <= 0
+            // Thực hiện thao tác với tài nguyên chia sẻ
+            sem.release(); // Tăng giá trị semaphore
+
+9. Shared memory là gì?
+    - Shared memory là một vùng bộ nhớ được chia sẻ giữa nhiều tiến trình (process) hoặc thread, cho phép chúng giao tiếp và trao đổi dữ liệu một cách nhanh chóng.
+    - Ưu điểm:
+        • Tốc độ truy cập nhanh hơn so với các phương thức IPC khác như message queues hay pipes.
+        • Giảm overhead do không cần sao chép dữ liệu giữa các tiến trình.
+    - Nhược điểm:
+        • Cần quản lý đồng bộ hóa để tránh
+
+    - Ví dụ sử dụng shared memory:
+        • Trong C++, có thể sử dụng thư viện POSIX hoặc System V để tạo và quản lý shared memory.
+        • Ví dụ với POSIX:
+            #include <sys/mman.h>
+            #include <fcntl.h>
+            #include <unistd.h>
+
+            int main()
+            {
+                int fd = shm_open("/my_shm", O_CREAT | O_RDWR, 0666);
+                ftruncate(fd, sizeof(int));
+                int* shared_data = (int*)mmap(0, sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+                *shared_data = 42; // Ghi dữ liệu vào shared memory
+                munmap(shared_data, sizeof(int));
+                close(fd);
+                shm_unlink("/my_shm"); // Xóa shared memory
+                return 0;
+            }
+
+10. Quá trình boot của hệ điều hành là gì?
+    • Quá trình boot của hệ điều hành là quá trình khởi động máy tính từ trạng thái tắt hoặc reset đến trạng thái sẵn sàng sử dụng.
+    • Các bước chính trong quá trình boot:
+        1. Power-On Self Test (POST): Kiểm tra phần cứng cơ bản như RAM, CPU, ổ đĩa cứng.
+        2. Tải Bootloader: Tìm và tải bootloader từ ổ đĩa cứng hoặc thiết bị lưu trữ khác.
+        3. Tải Kernel: Bootloader nạp kernel của hệ điều hành vào bộ nhớ.
+        4. Khởi tạo Hệ Điều Hành: Kernel khởi tạo các thành phần cần thiết và chuyển quyền điều khiển cho hệ điều hành.
+        5. Khởi động Dịch Vụ và Ứng Dụng: Hệ điều hành khởi động các dịch vụ và ứng dụng cần thiết để người dùng có thể sử dụng.
+
+11. Bootloader là gì?
+    • Bootloader là một chương trình nhỏ được lưu trữ trên ổ đĩa cứng hoặc thiết bị lưu trữ khác, có nhiệm vụ nạp hệ điều hành vào bộ nhớ khi máy tính khởi động.
+    • Nó thực hiện các bước sau:
+        1. Tìm kiếm và nạp kernel của hệ điều hành.
+        2. Cấu hình các tham số cần thiết cho kernel.
+        3. Chuyển quyền điều khiển cho kernel để tiếp tục quá trình khởi động.
+
+12. Uboot là gì?
+    • U-Boot (Universal Bootloader) là một bootloader phổ biến cho các hệ thống nhúng, được sử dụng để khởi động các thiết bị như điện thoại, máy tính bảng, và các thiết bị IoT.
+    • Nó hỗ trợ nhiều kiến trúc phần cứng khác nhau và có khả năng nạp kernel của hệ điều hành từ nhiều nguồn khác nhau như ổ đĩa flash, mạng, hoặc thẻ SD.
+    • U-Boot cung cấp giao diện dòng lệnh để cấu hình và quản lý quá trình khởi động.
+
+13. Device driver là gì?
+    • Device driver là một phần mềm trung gian giữa hệ điều hành và phần cứng, cho phép hệ điều hành giao tiếp với các thiết bị phần cứng như ổ đĩa, card mạng, card đồ họa, v.v.
+    • Nó cung cấp các hàm API để hệ điều hành có thể gửi lệnh và nhận dữ liệu từ thiết bị phần cứng.
+    • Mục đích của device driver là trừu tượng hóa chi tiết phần cứng, giúp lập trình viên không cần quan tâm đến cách thức hoạt động cụ thể của từng thiết bị.
+
+13. Device tree là gì?
+    • Device tree là một cấu trúc dữ liệu mô tả phần cứng của hệ thống, thường được sử dụng trong các hệ thống nhúng.
+    • Nó cung cấp thông tin về các thiết bị phần cứng, cách kết nối và cấu hình của chúng, giúp hệ điều hành hiểu rõ về phần cứng mà nó đang chạy trên đó.
+    • Device tree thường được sử dụng trong các hệ thống Linux để hỗ trợ việc khởi động và quản lý thiết bị phần cứng.
+
+14. Cross compiler là gì?
+    • Cross compiler là một trình biên dịch cho phép biên dịch mã nguồn trên một hệ thống (host) để chạy trên một hệ thống khác (target).
+    • Ví dụ: Biên dịch mã nguồn C++ trên máy tính x86 để chạy trên thiết bị ARM.
+    • Mục đích của cross compiler là hỗ trợ phát triển phần mềm cho các hệ thống nhúng hoặc các kiến trúc phần cứng khác mà không cần phải chuyển đổi môi trường phát triển.
+
+15. Các loại tập lệnh?
+    • Tập lệnh (Instruction Set) là tập hợp các lệnh mà một CPU có thể thực thi.
+    • Các loại tập lệnh:
+        1. Tập lệnh RISC (Reduced Instruction Set Computer):
+            ○ Sử dụng một tập hợp lệnh đơn giản và cố định.
+            ○ Mỗi lệnh thường thực hiện một thao tác đơn giản.
+            ○ Ví dụ: ARM, MIPS.
+
+        2. Tập lệnh CISC (Complex Instruction Set Computer):
+            ○ Sử dụng một tập hợp lệnh phức tạp hơn, có thể thực hiện nhiều thao tác trong một lệnh.
+            ○ Ví dụ: x86, x86-64.
+
+16. Phân biệt process và thread?
+    • Process (Tiến trình):
+        ○ Là một chương trình đang chạy, bao gồm mã lệnh, dữ liệu, và tài nguyên hệ thống.
+        ○ Mỗi tiến trình có không gian địa chỉ riêng biệt, không chia sẻ bộ nhớ với các tiến trình khác.
+        ○ Quản lý tài nguyên và bảo vệ an toàn giữa các tiến trình.
+
+    • Thread (Luồng):
+        ○ Là một đơn vị thực thi nhỏ hơn trong một tiến trình, chia sẻ cùng không gian địa chỉ và tài nguyên với các luồng khác trong cùng tiến trình.
+        ○ Nhiều luồng có thể chạy song song trong cùng một tiến trình, giúp tăng hiệu suất và khả năng phản hồi của ứng dụng.
+        ○ Quản lý nhẹ hơn so với tiến trình, nhưng cần đồng bộ hóa để tránh xung đột khi truy cập tài nguyên chung.
+
+17. Cảm biến IMU là gì?
+    • IMU (Inertial Measurement Unit) là một thiết bị cảm biến dùng để đo lường các thông số chuyển động và định hướng của một đối tượng.
+    • IMU thường bao gồm các cảm biến như:
+        1. Accelerometer: Đo gia tốc theo ba trục (X, Y, Z).
+        2. Gyroscope: Đo tốc độ góc xoay quanh ba trục.
+        3. Magnetometer: Đo từ trường để xác định hướng từ tính.
+    • IMU được sử dụng trong nhiều ứng dụng như robot, máy bay không người lái, điện thoại di động, và các thiết bị định vị.
+
+18. Big endian và little endian là gì?
+    • Big Endian:
+        ○ Là cách lưu trữ dữ liệu trong đó byte cao nhất (most significant byte) được lưu trữ ở địa chỉ thấp nhất.
+        ○ Ví dụ: Số 0x12345678 sẽ được lưu trữ là 12 34 56 78.
+
+    • Little Endian:
+        ○ Là cách lưu trữ dữ liệu trong đó byte thấp nhất (least significant byte) được lưu trữ ở địa chỉ thấp nhất.
+        ○ Ví dụ: Số 0x12345678 sẽ được lưu trữ là 78 56 34 12.
+
+    • Lựa chọn giữa big endian và little endian phụ thuộc vào kiến trúc phần cứng và yêu cầu của ứng dụng. Little endian thường được sử dụng trong các hệ thống x86, trong khi big endian thường được sử dụng trong các hệ thống mạng và một số kiến trúc khác như PowerPC.
+
+19. Android AOSP là gì?
+    • AOSP (Android Open Source Project) là dự án mã nguồn mở của Google cho hệ điều hành Android.
+    • AOSP cung cấp mã nguồn gốc của Android, cho phép các nhà phát triển tùy chỉnh và xây dựng hệ điều hành Android cho các thiết bị khác nhau.
+    • AOSP bao gồm các thành phần chính như kernel, framework, thư viện, và ứng dụng hệ thống.
+    • Các nhà sản xuất thiết bị có thể sử dụng AOSP để phát triển phiên bản Android tùy chỉnh cho sản phẩm của họ.
+
+20. Android HAL là gì?
+    • HAL (Hardware Abstraction Layer) là một lớp trừu tượng phần cứng trong hệ điều hành Android.
+    • HAL cung cấp giao diện giữa phần mềm và phần cứng, cho phép các ứng dụng và framework Android truy cập vào các tính năng phần cứng mà không cần biết chi tiết về cách thức hoạt động của chúng.
+    • HAL giúp tách biệt phần mềm và phần cứng, cho phép các nhà phát triển dễ dàng phát triển ứng dụng mà không cần quan tâm đến các chi tiết cụ thể của từng loại phần cứng.
+
+21. Android khác với Linux như thế nào?
+    • Android là một hệ điều hành di động dựa trên nhân Linux, nhưng có nhiều khác biệt so với các bản phân phối Linux truyền thống:
+        1. Giao diện người dùng: Android sử dụng giao diện người dùng cảm ứng tối ưu cho thiết bị di động, trong khi các bản phân phối Linux thường sử dụng giao diện máy tính để bàn.
+        2. Quản lý ứng dụng: Android sử dụng mô hình ứng dụng dựa trên APK (Android Package) và Google Play Store, trong khi Linux sử dụng các gói phần mềm khác nhau (deb, rpm, v.v.).
+        3. Quyền truy cập: Android có hệ thống quyền truy cập nghiêm ngặt hơn để bảo vệ dữ liệu người dùng, trong khi Linux cho phép người dùng quản lý quyền truy cập linh hoạt hơn.
+        4. HAL: Android sử dụng HAL để trừu tượng hóa phần cứng, trong khi Linux thường tương tác trực tiếp với phần cứng thông qua driver.
+
+22. Binder của Android là gì?
+    • Binder là một cơ chế IPC (Inter-Process Communication) trong hệ điều hành Android, cho phép các tiến trình giao tiếp với nhau một cách hiệu quả.
+    • Binder cung cấp một giao diện để các tiến trình có thể gọi hàm từ xa (remote procedure calls - RPC) và truyền dữ liệu giữa chúng.
+    • Nó sử dụng một mô hình client-server, trong đó một tiến trình (client) có thể gọi các phương thức của tiến trình khác (server) thông qua Binder.
+    • Binder giúp tăng hiệu suất và bảo mật trong việc giao tiếp giữa các tiến trình trong Android.
+
+23. MQTT (Message Queue Telemetry Transport) là gì?
+    • MQTT là một giao thức truyền thông nhẹ, được thiết kế để kết nối các thiết bị IoT (Internet of Things) với nhau.
+    • Nó sử dụng mô hình publish-subscribe, trong đó các thiết bị có thể gửi (publish) và nhận (subscribe) thông điệp từ các chủ đề (topics).
+    • MQTT rất hiệu quả trong việc truyền tải dữ liệu với băng thông hạn chế và độ trễ thấp, phù hợp cho các ứng dụng IoT.
+    • Các tính năng chính của MQTT bao gồm:
+        1. Nhẹ nhàng và tiết kiệm băng thông.
+        2. Hỗ trợ chất lượng dịch vụ (QoS) để đảm bảo độ tin cậy trong việc truyền tải.
+        3. Khả năng hoạt động trong môi trường mạng không ổn định.
+
+24. SPI là gì?
+    • SPI (Serial Peripheral Interface) là một giao thức truyền thông nối tiếp được sử dụng để giao tiếp giữa vi điều khiển và các thiết bị ngoại vi như cảm biến, bộ nhớ flash, v.v.
+    • SPI sử dụng 4 dây chính:
+        1. MOSI (Master Out Slave In): Dây dữ liệu từ master đến slave.
+        2. MISO (Master In Slave Out): Dây dữ liệu từ slave đến master.
+        3. SCLK (Serial Clock): Dây xung đồng hồ do master tạo ra để đồng bộ hóa truyền dữ liệu.
+        4. CS (Chip Select): Dây chọn chip để xác định thiết bị slave nào đang được giao tiếp.
+    • SPI cho phép truyền dữ liệu nhanh chóng và hiệu quả, thường được sử dụng trong các ứng dụng nhúng.
+
+
+25. Static lib và Shared lib là gì?
+    • Static Library (Thư viện tĩnh):
+        ○ Là một tập hợp các mã nguồn đã được biên dịch thành file nhị phân (.lib hoặc .a).
+        ○ Khi liên kết, mã của thư viện sẽ được chèn trực tiếp vào file thực thi, tạo ra một file độc lập.
+        ○ Ưu điểm: Không cần phụ thuộc vào thư viện bên ngoài khi chạy, dễ dàng phân phối.
+        ○ Nhược điểm: Kích thước file thực thi lớn hơn, không thể cập nhật thư viện mà không biên dịch lại.
+
+    • Shared Library (Thư viện động):
+        ○ Là một tập hợp các mã nguồn đã được biên dịch thành file nhị phân (.so hoặc .dll).
+        ○ Khi liên kết, chỉ có thông tin về thư viện được lưu trong file thực thi; mã thực tế được tải vào bộ nhớ khi chương trình chạy.
+        ○ Ưu điểm: Tiết kiệm dung lượng bộ nhớ, có thể cập nhật thư viện mà không cần biên dịch lại ứng dụng.
+        ○ Nhược điểm: Cần đảm bảo thư viện có sẵn khi chạy ứng dụng
+
+
+26. Tại sao trong các dự án lớn, service thường được tách thành các process?
+    • Tách service thành các process giúp:
+        1. **Quản lý tài nguyên**: Mỗi process có không gian địa chỉ riêng, giúp tránh xung đột bộ nhớ và quản lý tài nguyên hiệu quả hơn.
+        2. **Bảo mật**: Tách biệt các service giúp hạn chế ảnh hưởng của lỗi hoặc tấn công từ một service đến các service khác.
+        3. **Khả năng mở rộng**: Dễ dàng mở rộng hoặc thay thế từng service mà không ảnh hưởng đến toàn bộ hệ thống.
+        4. **Độ tin cậy**: Nếu một process gặp sự cố, các process khác vẫn có thể hoạt động bình thường, tăng tính ổn định của hệ thống.
+
+27. Quy trình phát triển phần mềm?
+    • Quy trình phát triển phần mềm thường bao gồm các bước sau:
+        1. **Phân tích yêu cầu**: Xác định và phân tích các yêu cầu của người dùng và hệ thống.
+        2. **Thiết kế**: Lập kế hoạch kiến trúc hệ thống, thiết kế giao diện người dùng và cấu trúc dữ liệu.
+        3. **Lập trình**: Viết mã nguồn dựa trên thiết kế đã được phê duyệt.
+        4. **Kiểm thử**: Thực hiện kiểm thử để phát hiện lỗi và đảm bảo phần mềm hoạt động đúng theo yêu cầu.
+        5. **Triển khai**: Cài đặt phần mềm trên môi trường sản xuất và cung cấp cho người dùng.
+        6. **Bảo trì**: Theo dõi, sửa lỗi và cập nhật phần mềm khi cần thiết.
+
+28. V models là gì?
+    • V-Model (V-Model) là một mô hình phát triển phần mềm mô tả mối quan hệ giữa các giai đoạn phát triển và kiểm thử.
+    • Mô hình này có hình dạng chữ "V", trong đó:
+        1. Bên trái của chữ "V" đại diện cho các giai đoạn phát triển (phân tích yêu cầu, thiết kế, lập trình).
+        2. Bên phải của chữ "V" đại diện cho các giai đoạn kiểm thử (kiểm thử đơn vị, kiểm thử tích hợp, kiểm thử hệ thống).
+    • Mô hình V nhấn mạnh rằng mỗi giai đoạn phát triển đều tương ứng với một giai đoạn kiểm thử, giúp đảm bảo chất lượng phần mềm từ đầu đến cuối.
+
+29. Agile là gì?
+    • Agile là một phương pháp phát triển phần mềm linh hoạt, tập trung vào việc đáp ứng nhanh chóng các thay đổi trong yêu cầu và cải tiến liên tục.
+    • Các nguyên tắc chính của Agile bao gồm:
+        1. **Tương tác với khách hàng**: Liên tục giao tiếp và nhận phản hồi từ khách hàng để điều chỉnh sản phẩm.
+        2. **Phát triển lặp đi lặp lại**: Chia quá trình phát triển thành các vòng lặp ngắn (sprint), mỗi vòng lặp tạo ra một phiên bản có thể sử dụng được.
+        3. **Đội ngũ tự quản lý**: Khuyến khích đội ngũ phát triển tự quản lý và đưa ra quyết định.
+        4. **Cải tiến liên tục**: Luôn tìm cách cải tiến quy trình và sản phẩm dựa trên phản hồi và kinh nghiệm.
+
+
+
+=====================================================================================
+III. VARIABLES
+a. Fundamental knowledge
+-------------------------------------------------------------------------------
+Các loại biến trong C++
+    + Biến cục bộ (Local):
+        Đặc điểm: Được khai báo trong một hàm hoặc block. Không thể truy cập từ ngoài block.
+        Phạm vi (Scope): Chỉ trong block hoặc hàm khai báo.
+        Thời gian sống (Lifetime): Tồn tại khi hàm/block đang thực thi.
+        Bộ nhớ: Stack.
+
+    + Biến toàn cục (Global):
+        Đặc điểm: Được khai báo bên ngoài mọi hàm, block, hoặc class. Có thể truy cập từ bất kỳ đâu nếu không có từ khóa static.
+        Phạm vi (Scope): Toàn bộ chương trình.
+        Thời gian sống (Lifetime): Tồn tại suốt chương trình.
+        Bộ nhớ: Static/global memory.
+
+    + Biến static:
+        Đặc điểm: Dùng từ khóa static.
+        Phạm vi (Scope):
+        Nếu trong hàm: Phạm vi là hàm đó.
+        Nếu trong class: Phạm vi là class.
+        Thời gian sống (Lifetime): Tồn tại suốt chương trình (lưu trạng thái giữa các lần gọi hàm).
+        Bộ nhớ: Static memory.
+
+    + Biến thành viên (Member):
+        Đặc điểm: Được khai báo bên trong class, ngoài mọi hàm.
+        Phạm vi (Scope): Liên kết với instance của class.
+        Thời gian sống (Lifetime): Tồn tại khi object của class còn tồn tại.
+        Bộ nhớ: Heap/stack (tùy object).
+
+    + Biến static member:
+        Đặc điểm: Biến thành viên của class, khai báo với từ khóa static.
+        Phạm vi (Scope): Liên kết với class, không thuộc instance cụ thể.
+        Thời gian sống (Lifetime): Tồn tại suốt chương trình.
+        Bộ nhớ: Static memory.
+
+    + Biến tạm thời (Temporary):
+        Đặc điểm: Các biến được compiler tạo tự động, ví dụ khi trả về giá trị từ hàm hoặc ép kiểu tạm thời.
+        Phạm vi (Scope): Nội bộ trong biểu thức hoặc ngữ cảnh tạm thời.
+        Thời gian sống (Lifetime): Tồn tại trong thời gian ngắn, thường là trong biểu thức.
+        Bộ nhớ: Stack/register.
+
+    + Biến register:
+        Đặc điểm: Sử dụng từ khóa register. Lưu trữ trong thanh ghi (nếu có sẵn).
+        Phạm vi (Scope): Phạm vi cục bộ.
+        Thời gian sống (Lifetime): Tồn tại khi block/hàm thực thi.
+        Bộ nhớ: Register (nếu compiler hỗ trợ).
+
+    + Biến dynamic (động):
+        Đặc điểm: Cấp phát bằng new hoặc malloc. Không tự động hủy khi ra khỏi scope.
+        Phạm vi (Scope): Truy cập thông qua con trỏ.
+        Thời gian sống (Lifetime): Tồn tại đến khi được giải phóng thủ công (delete/free).
+        Bộ nhớ: Heap.
+
+    + Biến constexpr:
+        Đặc điểm: Sử dụng từ khóa constexpr trong khai báo. Giá trị xác định tại compile time.
+        Phạm vi (Scope): Giống biến cục bộ hoặc toàn cục tùy vị trí khai báo.
+        Thời gian sống (Lifetime): Giá trị xác định tại compile time.
+        Bộ nhớ: Stack/static memory.
+
+    + Biến thread-local:
+        Đặc điểm: Sử dụng từ khóa thread_local.
+        Phạm vi (Scope): Chỉ trong thread mà nó được tạo.
+        Thời gian sống (Lifetime): Tồn tại suốt thời gian sống của thread.
+        Bộ nhớ: Thread-local storage.
+
+    + Biến extern:
+        Đặc điểm: Sử dụng từ khóa extern để khai báo biến toàn cục trong file khác.
+        Phạm vi (Scope): Toàn bộ chương trình, nhưng chỉ được định nghĩa trong một file.
+        Thời gian sống (Lifetime): Tồn tại suốt chương trình.
+        Bộ nhớ: Static/global memory.
+
+    + Biến mutable:
+        Đặc điểm: Sử dụng từ khóa mutable trong class. Cho phép thay đổi giá trị của biến private trong một hàm const.
+        Phạm vi (Scope): Trong class.
+        Thời gian sống (Lifetime): Tồn tại khi object của class còn tồn tại
+        Bộ nhớ: Heap/stack (tùy object).
+
+    + Biến const:
+        Đặc điểm: Sử dụng từ khóa const. Giá trị không thể thay đổi sau khi khởi tạo.
+        Phạm vi (Scope): Tùy thuộc vào vị trí khai báo (cục bộ, toàn cục).
+        Thời gian sống (Lifetime): Tồn tại trong phạm vi của nó.
+        Bộ nhớ: Stack/static memory.
+
+    + Biến volatile:
+        Đặc điểm: Sử dụng từ khóa volatile. Thông báo cho compiler rằng giá trị của biến có thể thay đổi bất ngờ (ví dụ từ phần cứng).
+        Phạm vi (Scope): Tùy thuộc vào vị trí khai báo.
+        Thời gian sống (Lifetime): Tồn tại trong phạm vi của nó.
+        Bộ nhớ: Stack/static memory.
+
+    + Biến auto:
+        Đặc điểm: Sử dụng từ khóa auto (C++11 trở lên). Compiler tự động xác định kiểu dữ liệu.
+        Phạm vi (Scope): Tùy thuộc vào vị trí khai báo.
+        Thời gian sống (Lifetime): Tồn tại trong phạm vi của nó.
+        Bộ nhớ: Stack.
+
+
+
+
+
+
+
+
+
+
+
+=====================================================================================
+IV. POINTERS
+a. Fundamental knowledge
+-------------------------------------------------------------------------------
+1. Con trỏ hằng (Constant Pointer)
+	• Định nghĩa: Là con trỏ mà địa chỉ mà nó trỏ tới không thể thay đổi sau khi được khởi tạo, nhưng giá trị tại địa chỉ đó có thể thay đổi.
+	• Khai báo: int* const ptr = &var;
+	• Đặc điểm:
+		○ Không thể thay đổi địa chỉ mà con trỏ trỏ tới.
+		○ Có thể thay đổi giá trị tại địa chỉ đó.
+	• Ví dụ:
+        int a = 5, b = 10;
+        int* const ptr = &a;           // ptr trỏ tới a.
+        *ptr = 15;                     // Được phép: thay đổi giá trị của a.
+        ptr = &b;                      // Lỗi: không thể thay đổi địa chỉ ptr trỏ tới.
+
+
+2. Hằng con trỏ (Pointer to Constant)
+	• Định nghĩa: Là con trỏ trỏ tới dữ liệu hằng, tức là giá trị tại địa chỉ mà nó trỏ tới không thể thay đổi, nhưng con trỏ có thể trỏ tới địa chỉ khác.
+	• Khai báo: const int* ptr = &var;
+	• Đặc điểm:
+		○ Không thể thay đổi giá trị tại địa chỉ mà con trỏ trỏ tới.
+		○ Có thể thay đổi địa chỉ mà con trỏ trỏ tới.
+	• Ví dụ:
+        int a = 5, b = 10;
+        const int* ptr = &a;          // ptr trỏ tới a.
+        *ptr = 15;                    // Lỗi: không thể thay đổi giá trị của a.
+        a = 20;                       // Được phép: thay đổi giá trị của a.
+        ptr = &b;                     // Được phép: thay đổi địa chỉ ptr trỏ tới.
+
+
+3. Hằng con trỏ hằng (Constant Pointer to Constant)
+	• Định nghĩa: Là con trỏ mà cả địa chỉ mà nó trỏ tới và giá trị tại địa chỉ đó đều không thể thay đổi.
+	• Khai báo: const int* const ptr = &var;
+	• Đặc điểm:
+		○ Không thể thay đổi địa chỉ mà con trỏ trỏ tới.
+		○ Không thể thay đổi giá trị tại địa chỉ mà con trỏ trỏ tới.
+	• Ví dụ:
+        int a = 5;
+        const int* const ptr = &a;              // ptr trỏ tới a.
+        *ptr = 15;                              // Lỗi: không thể thay đổi giá trị của a.
+        ptr = &b;                               // Lỗi: không thể thay đổi địa chỉ ptr trỏ tới.
+
+- Ghi chú:
+
+	-> Thứ tự từ khóa không quan trọng: int* const và const int* đều hợp lệ, nhưng ý nghĩa sẽ khác nhau
+	Quy tắc đọc từ phải sang trái:
+		○ const bên trái *: giá trị mà con trỏ trỏ tới không thay đổi.
+		○ const bên phải *: con trỏ không thay đổi địa chỉ.
+
+
+---------------------------------------------------------------------------------
+Các loại Smart Pointer chính trong C++:
+
+	1. std::unique_ptr:
+		○ Quản lý một đối tượng duy nhất.
+		○ Không cho phép copy, chỉ cho phép chuyển quyền sở hữu bằng cách sử dụng std::move.
+		○ Ví dụ:
+            std::unique_ptr<int> ptr = std::make_unique<int>(10);
+            std::unique_ptr<int> ptr2 = std::move(ptr); // Chuyển quyền sở hữu
+
+	2. std::shared_ptr:
+		○ Cho phép nhiều con trỏ cùng quản lý một đối tượng.
+		○ Sử dụng cơ chế đếm tham chiếu (reference count).
+		○ Khi số lượng tham chiếu giảm về 0, đối tượng được giải phóng.
+		○ Ví dụ:
+            std::shared_ptr<int> ptr1 = std::make_shared<int>(10);
+            std::shared_ptr<int> ptr2 = ptr1; // Shared ownership
+
+	3. std::weak_ptr:
+		○ Là một con trỏ không sở hữu đối tượng.
+		○ Được sử dụng cùng std::shared_ptr để phá vỡ vòng lặp tham chiếu.
+		○ Ví dụ:
+            std::shared_ptr<int> sptr = std::make_shared<int>(10);
+            std::weak_ptr<int> wptr = sptr; // Weak reference
+
+    - Lợi ích của Smart Pointer:
+        • Tự động quản lý bộ nhớ, giảm lỗi rò rỉ bộ nhớ.
+        • Tránh các lỗi liên quan đến con trỏ raw (raw pointers).
+        • Cải thiện sự an toàn và rõ ràng trong mã nguồn.
+
+    - Lưu ý:
+        • Nên dùng std::make_unique và std::make_shared để tránh lỗi trong cấp phát.
+        • Hiệu năng: std::unique_ptr tốt hơn std::shared_ptr do không cần đếm tham chiếu.
+
+    ví dụ tạo object bằng smart pointer:
+        std::unique_ptr<MyClass> obj1 = std::make_unique<MyClass>();
+
+---------------------------------------------------------------------------------
+Các kiểu cast trong C++
+1. static_cast
+	• Dùng để thực hiện các phép chuyển đổi kiểu an toàn, được kiểm tra tại thời gian biên dịch.
+	• Chuyển đổi kiểu rõ ràng giữa các kiểu dữ liệu có quan hệ rõ ràng (ví dụ: từ kiểu cơ bản sang kiểu cơ bản khác, hoặc giữa các kiểu dẫn xuất trong cùng một hệ thống kế thừa).
+    Ví dụ:
+        int a = 10;
+        float b = static_cast<float>(a); // Chuyển đổi int sang float
+    Lưu ý:
+        • Không kiểm tra an toàn tại runtime.
+        • Không dùng cho chuyển đổi xuống (downcasting) giữa các lớp đa hình.
+
+2. dynamic_cast
+	• Dùng để thực hiện chuyển đổi kiểu an toàn ở runtime giữa các lớp trong một hệ thống kế thừa đa hình.
+	• Chỉ hoạt động với các lớp có ít nhất một hàm ảo (virtual).
+    Ví dụ:
+        class Base
+        {
+        public:
+            virtual ~Base() {}
+        };
+        class Derived : public Base {};
+        Base* basePtr = new Derived();
+        Derived* derivedPtr = dynamic_cast<Derived*>(basePtr); // Downcast an toàn
+    Lưu ý:
+        • Nếu cast không thành công, nó trả về nullptr.
+        • Chậm hơn do phải kiểm tra kiểu tại runtime.
+
+3. const_cast
+	• Dùng để thêm hoặc loại bỏ từ khóa const của một biến.
+	• Chỉ nên dùng khi chắc chắn rằng việc thay đổi const-ness không dẫn đến hành vi không xác định.
+    Ví dụ:
+        const int a = 10;
+        int* p = const_cast<int*>(&a);
+        *p = 20; // Undefined behavior
+
+        int b = 30;
+        // Thêm const vào biến không const
+        const int* constPtr = const_cast<const int*>(&b); // Chuyển đổi b thành const int*
+    Lưu ý:
+        • Không nên dùng để thay đổi giá trị của biến const.
+
+4. reinterpret_cast
+	• Dùng để chuyển đổi giữa các kiểu con trỏ hoặc kiểu dữ liệu hoàn toàn không liên quan.
+	• Rất mạnh mẽ nhưng cũng nguy hiểm, vì không kiểm tra tính an toàn.
+    Ví dụ:
+        int a = 10;
+        void* ptr = reinterpret_cast<void*>(&a); // Chuyển int* thành void*
+        int* intPtr = reinterpret_cast<int*>(ptr); // Chuyển void* thành int*
+    Lưu ý:
+        • Có thể gây lỗi runtime nếu không sử dụng đúng cách.
+        • Thường dùng trong lập trình hệ thống hoặc các trường hợp cần thao tác trực tiếp trên bộ nhớ.
+
+5. Khi nào dùng shared_ptr, unique_ptr, weak_ptr?
+    • std::unique_ptr:
+        ○ Dùng khi chỉ cần một con trỏ duy nhất sở hữu đối tượng.
+        ○ Tự động giải phóng bộ nhớ khi ra khỏi phạm vi.
+        ○ Không cho phép copy, chỉ cho phép chuyển quyền sở hữu.
+
+    • std::shared_ptr:
+        ○ Dùng khi cần nhiều con trỏ cùng quản lý một đối tượng.
+        ○ Sử dụng cơ chế đếm tham chiếu để tự động giải phóng bộ nhớ khi không còn tham chiếu nào.
+
+    • std::weak_ptr:
+        ○ Dùng để tránh vòng lặp tham chiếu giữa các std::shared_ptr.
+        ○ Không sở hữu đối tượng, chỉ giữ một tham chiếu yếu đến đối tượng được quản lý bởi std::shared_ptr.
+
+----------------------------------------------------------------------------------
+b. Questions
+1. Con trỏ this là gì?
+    Con trỏ this trong C++ là một con trỏ đặc biệt, tự động được cung cấp trong mọi hàm thành viên của lớp (trừ các hàm static). Nó trỏ tới đối tượng hiện tại đang gọi hàm.
+        • Công dụng chính:
+            1. Truy cập thành viên của đối tượng: Phân biệt biến thành viên và tham số cùng tên.
+            2. Trả về đối tượng hiện tại: Dùng trong lập trình chuỗi hàm.
+            3. Hỗ trợ các hàm const: Trong hàm const, this trỏ tới một đối tượng const.
+        • Lưu ý:
+            ○ this là hằng con trỏ, không thể gán giá trị mới.
+            void changeValue()
+            {
+                this->a = 20; // thay đổi giá trị của a thông qua this
+                // this = nullptr; // lỗi, không thể thay đổi địa chỉ của this
+            }
+            ○ Không có trong hàm static.
+
+2. Các loại lỗi phổ biến với con trỏ trong C++:
+    - Dereferencing null pointer (Giải tham chiếu con trỏ null):
+    Xảy ra khi cố truy cập dữ liệu thông qua con trỏ chưa được khởi tạo hoặc đã bị gán null.
+    Ví dụ:
+        int* ptr = nullptr;
+        *ptr = 10; // Lỗi: truy cập con trỏ null
+
+    - Dangling pointer (Con trỏ rỗng lủng):
+    Xảy ra khi con trỏ trỏ tới một vùng bộ nhớ đã bị giải phóng hoặc không còn hợp lệ.
+
+    Ví dụ:
+        int* ptr = new int(10);
+        delete ptr; // Giải phóng bộ nhớ
+        *ptr = 20;  // Lỗi: sử dụng con trỏ rỗng lủng
+
+    - Memory leak (Rò rỉ bộ nhớ):
+    Xảy ra khi cấp phát bộ nhớ động nhưng không giải phóng, dẫn đến mất kiểm soát vùng nhớ.
+    Ví dụ:
+        int* ptr = new int(10);
+        ptr = new int(20); // Lần cấp phát trước không được giải phóng
+
+    - Double delete (Giải phóng bộ nhớ hai lần):
+    Xảy ra khi giải phóng cùng một con trỏ hai lần.
+    Ví dụ:
+        int* ptr = new int(10);
+        delete ptr;
+        delete ptr; // Lỗi: giải phóng lần hai
+
+    - Invalid pointer (Con trỏ không hợp lệ):
+    Con trỏ trỏ tới một vùng bộ nhớ không được phép truy cập (vd. truy cập con trỏ đã bị giải phóng hoặc chưa được cấp phát hợp lệ).
+    Ví dụ:
+        int* ptr; // Con trỏ chưa được khởi tạo
+        *ptr = 10; // Lỗi: sử dụng con trỏ không hợp lệ
+
+    - Accessing out-of-bounds memory (Truy cập ngoài phạm vi bộ nhớ):
+    Truy cập vào vùng nhớ vượt quá phạm vi cấp phát, dẫn đến hành vi không xác định (undefined behavior).
+    Ví dụ:
+        int arr[3] = {1, 2, 3};
+        int* ptr = arr;
+        ptr[3] = 10; // Lỗi: truy cập ngoài phạm vi
+
+    - Wild pointer (Con trỏ hoang):
+    Là con trỏ chưa được khởi tạo nhưng đã được sử dụng, trỏ đến vùng nhớ không xác định.
+    Ví dụ:
+        int* ptr; // Con trỏ không khởi tạo
+        *ptr = 10; // Lỗi: hành vi không xác định
+
+    - Type mismatch (Sai kiểu dữ liệu):
+    Gán con trỏ kiểu này vào kiểu khác mà không đảm bảo tương thích.
+    Ví dụ:
+        void* ptr = malloc(sizeof(int));
+        *(float*)ptr = 3.14; // Lỗi: không phù hợp kiểu
+
+3. Con trỏ void là gì?
+    Con trỏ void là một loại con trỏ không có kiểu dữ liệu cụ thể, có thể trỏ tới bất kỳ kiểu dữ liệu nào mà không cần phải xác định kiểu trước.
+    - Đặc điểm:
+        • Không thể dereference trực tiếp mà không chuyển đổi kiểu.
+        • Có thể chuyển đổi sang bất kỳ kiểu con trỏ nào khác mà không cần ép kiểu.
+        ví dụ:
+            void* ptr;
+            int a = 10;
+            ptr = &a; // Con trỏ void trỏ tới địa chỉ của a
+            int* intPtr = static_cast<int*>(ptr); // Chuyển đổi con trỏ void sang con trỏ int
+    - Công dụng:
+        • Dùng trong các hàm hoặc thư viện cần làm việc với nhiều kiểu dữ liệu khác nhau.
+        • Thường được sử dụng trong các API hoặc thư viện như malloc, free.
+
+4. Sự khác nhau giữ reference và pointer?
+    - Con trỏ (Pointer):
+        • Là một biến lưu trữ địa chỉ của một biến khác.
+        • Có thể thay đổi địa chỉ mà nó trỏ tới.
+        • Có thể là null hoặc không trỏ tới bất kỳ giá trị nào.
+        • Cần sử dụng toán tử dereference (*) để truy cập giá trị mà nó trỏ tới.
+
+    - Tham chiếu (Reference):
+        • Là một bí danh cho một biến đã tồn tại.
+        • Không thể thay đổi tham chiếu sau khi đã được khởi tạo.
+        • Không thể là null, luôn phải trỏ tới một giá trị hợp lệ.
+        • Không cần toán tử dereference để truy cập giá trị, có thể sử dụng trực tiếp như biến bình thường.
+
+
+=====================================================================================
+V. STL
+a. Fundamental knowledge
+-------------------------------------------------------------------------------
+Các thành phần chính của STL:
+    • Containers (Bộ chứa): Lưu trữ dữ liệu, ví dụ: vector, list, map, set.
+    • Algorithms (Thuật toán): Các hàm thao tác trên dữ liệu trong containers, ví dụ: sort, find, copy.
+    • Iterators (Bộ lặp): Cung cấp cách truy cập các phần tử trong containers mà không cần biết cấu trúc bên trong.
+    • Function Objects (Đối tượng hàm): Cho phép sử dụng các hàm như đối tượng, ví dụ: std::function.
+
+Các loại container trong STL:
+    - Sequence Containers (Bộ chứa tuần tự):
+        • vector: Mảng động, cho phép truy cập ngẫu nhiên.
+        • list: Danh sách liên kết, cho phép chèn/xóa nhanh.
+        • deque: Hàng đợi hai đầu, cho phép thêm/xóa ở cả hai đầu.
+        • array: Mảng cố định kích thước.
+
+    - Associative Containers (Bộ chứa liên kết):
+        • set: Tập hợp các phần tử duy nhất, tự động sắp xếp.
+        • map: Bản đồ, lưu cặp khóa-giá trị duy nhất, tự động sắp xếp theo khóa.
+        • multiset: Tập hợp có thể chứa nhiều phần tử trùng lặp.
+        • multimap: Bản đồ có thể chứa nhiều cặp khóa-giá trị trùng lặp.
+
+    - Unordered Containers (Bộ chứa không sắp xếp):
+        • unordered_set: Tập hợp không sắp xếp, sử dụng hash table.
+        • unordered_map: Bản đồ không sắp xếp, sử dụng hash table.
+        • unordered_multiset: Tập hợp không sắp xếp có thể chứa trùng lặp.
+        • unordered_multimap: Bản đồ không sắp xếp có thể chứa trùng lặp.
+
+    - Container Adaptors (Bộ chứa thích nghi):
+        • stack: Ngăn xếp, cho phép thao tác LIFO (Last In First Out).
+        • queue: Hàng đợi, cho phép thao tác FIFO (First In First Out).
+        • priority_queue: Hàng đợi ưu tiên, cho phép truy cập phần tử lớn nhất/nhỏ nhất.
+
+Các thuật toán thường dùng trong STL:
+    • sort: Sắp xếp các phần tử trong container.
+    • find: Tìm kiếm một phần tử trong container.
+    • copy: Sao chép các phần tử từ một container sang container khác.
+    • accumulate: Tính tổng các phần tử trong container.
+    • transform: Biến đổi các phần tử trong container bằng một hàm.
+
+-------------------------------------------------------------------------------
+b. Questions
+1. So sánh array và vector?
+    - Array:
+        • Kích thước cố định, không thể thay đổi sau khi khai báo.
+        • Cấp phát bộ nhớ trên stack (nếu là mảng tĩnh) hoặc trên heap (nếu là mảng động).
+        • Không hỗ trợ các hàm tiện ích như thêm, xóa phần tử.
+        • Truy cập nhanh hơn do không có overhead của quản lý bộ nhớ.
+
+    - Vector:
+        • Kích thước động, có thể thay đổi khi thêm/xóa phần tử.
+        • Cấp phát bộ nhớ trên heap.
+        • Hỗ trợ các hàm tiện ích như push_back, pop_back, insert, erase.
+        • Có overhead cho việc quản lý bộ nhớ và có thể tái cấp phát khi cần thiết.
+
+2. Tại sao nên sử dụng vector thay vì array?
+    • Kích thước động: Vector có thể thay đổi kích thước linh hoạt, trong khi array có kích thước cố định.
+    • Tiện ích: Vector cung cấp nhiều hàm tiện ích để thao tác với dữ liệu, như thêm, xóa, tìm kiếm.
+    • An toàn hơn: Vector tự quản lý bộ nhớ và tránh được lỗi rò rỉ bộ nhớ thường gặp với array.
+
+3. So sánh array và list?
+    - Array:
+        • Kích thước cố định, không thể thay đổi sau khi khai báo.
+        • Truy cập ngẫu nhiên nhanh chóng (O(1)).
+        • Cấp phát bộ nhớ liên tục, hiệu quả trong việc sử dụng bộ nhớ.
+        • Không hỗ trợ chèn/xóa phần tử nhanh chóng (O(n)).
+
+    - List:
+        • Kích thước động, có thể thay đổi khi thêm/xóa phần tử.
+        • Truy cập tuần tự chậm hơn (O(n)), không hỗ trợ truy cập ngẫu nhiên.
+        • Cấp phát bộ nhớ không liên tục, mỗi phần tử có thể ở một vị trí khác nhau trong bộ nhớ.
+        • Hỗ trợ chèn/xóa phần tử nhanh chóng (O(1)) nếu biết vị trí.
+
+
+
+
+
+
+
+
+======================================================================================
+VII. KEYWORDS
+a. Fundamental knowledge
+-------------------------------------------------------------------------------
+1. Từ khóa static:
+    • Trong hàm: Biến static giữ giá trị giữa các lần gọi hàm, chỉ được khởi tạo một lần.
+    • Trong class: Biến static là thành viên chung của class, không thuộc instance cụ thể.
+    • Trong file: Biến hoặc hàm static chỉ có thể truy cập trong file đó, không thể truy cập từ file khác.
+2. Từ khóa const:
+    • Biến const: Giá trị không thể thay đổi sau khi khởi tạo.
+    • Hàm const: Hàm không thay đổi trạng thái của đối tượng, không thể sửa đổi các thành viên không phải mutable.
+    • Con trỏ const: Con trỏ trỏ tới dữ liệu không thể thay đổi.
+    • Tham số const: Tham số hàm không thể thay đổi giá trị bên trong hàm.
+
+3. Từ khóa volatile:
+    • Biến volatile: Thông báo cho compiler rằng giá trị của biến có thể thay đổi bất ngờ (ví dụ từ phần cứng), không được tối ưu hóa.
+    • Sử dụng trong lập trình nhúng hoặc khi làm việc với phần cứng, để đảm bảo giá trị luôn được đọc từ bộ nhớ.
+
+4. Từ khóa auto:
+    • Biến auto: Compiler tự động xác định kiểu dữ liệu của biến dựa trên giá trị khởi tạo.
+    • Giúp mã nguồn ngắn gọn và dễ đọc, tránh việc phải khai báo kiểu dữ liệu dài dòng.
+    • Chỉ sử dụng trong C++11 trở lên.
+
+5. Từ khóa inline:
+    • Hàm inline: Được yêu cầu compiler chèn mã của hàm trực tiếp vào nơi gọi hàm, thay vì tạo một lời gọi hàm riêng.
+    • Giúp giảm overhead của việc gọi hàm, nhưng có thể làm tăng kích thước mã nếu hàm quá lớn.
+    • Compiler có thể quyết định không inline nếu thấy không hợp lý.
+
+6. Từ khóa mutable:
+    • Biến mutable: Cho phép thay đổi giá trị của biến thành viên trong một hàm const.
+    • Sử dụng khi cần thay đổi trạng thái của một thành viên mà không làm thay đổi trạng thái của đối tượng.
+
+-------------------------------------------------------------------------------
+b. Questions
+1.  Toán tử :: làm gì?
+    • Toán tử phạm vi (scope resolution operator) :: được sử dụng để truy cập thành viên của lớp, namespace hoặc để xác định phạm vi của biến toàn cục.
+    - Ví dụ:
+        • Truy cập thành viên lớp: MyClass::myMethod();
+        • Truy cập biến toàn cục: ::globalVariable;
+        • Trong namespace: std::cout;
+
+2. Từ khóa volatile làm gì?
+    • Từ khóa volatile thông báo cho compiler rằng giá trị của biến có thể thay đổi bất ngờ (ví dụ từ phần cứng hoặc luồng khác), do đó không được tối ưu hóa.
+    • Sử dụng trong lập trình nhúng hoặc khi làm việc với phần cứng để đảm bảo giá trị luôn được đọc từ bộ nhớ.
+    - Ví dụ:
+        volatile int sensorValue; // Giá trị có thể thay đổi từ phần cứng
+
+3. Inline function là gì?
+    • Hàm inline là hàm được yêu cầu compiler chèn mã của nó trực tiếp vào nơi gọi hàm, thay vì tạo một lời gọi hàm riêng.
+    • Giúp giảm overhead của việc gọi hàm, nhưng có thể làm tăng kích thước mã nếu hàm quá lớn.
+    • Được sử dụng khi hàm nhỏ và thường xuyên được gọi.
+    - Ví dụ:
+        inline int add(int a, int b) { return a + b; }
+
+4. Inline function được sử dụng khi nào?
+    • Khi hàm nhỏ và thường xuyên được gọi, giúp giảm overhead của việc gọi hàm.
+    • Khi muốn tối ưu hóa hiệu suất mà không cần phải tạo một lời gọi hàm riêng.
+    • Tuy nhiên, không nên sử dụng cho các hàm lớn hoặc phức tạp vì có thể làm tăng kích thước mã.
