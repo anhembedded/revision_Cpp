@@ -26,7 +26,7 @@ a. Fundamental knowledge
 
 ---------------------------------------------------------------
 - Năm hàm mặc định (default special member functions)
-    * Việc cần tự cài đặt chúng hay không phụ thuộc vào việc Class của bạn có quản lý trực tiếp tài nguyên hay không (ví dụ: bộ nhớ heap, file handles, network sockets).
+    * Việc cần tự cài đặt chúng hay không phụ thuộc vào việc Class có chủ đich quản lý trực tiếp tài nguyên hay không (ví dụ: bộ nhớ heap, file handles, network sockets).
     Default Constructor (Hàm tạo mặc định):
         • Được gọi khi đối tượng được tạo mà không có đối số.
         • Compiler sẽ tự tạo hàm tạo mặc định nếu lớp không có bất kỳ constructor nào được định nghĩa.
@@ -49,48 +49,42 @@ a. Fundamental knowledge
 ---------------------------------------------------------------------
 b. Questions
 1. Phân biệt class và object?
-    - Định nghĩa:
-    Class: Là bản thiết kế hoặc khuôn mẫu để tạo ra các đối tượng.
-    Object: Là thực thể cụ thể được tạo ra từ một class.
-
-    - Bản chất:
-    Class: Là một khái niệm trừu tượng.
-    Object: Là một đối tượng thực tế trong chương trình.
-
-    - Bộ nhớ:
-    Class: Không chiếm bộ nhớ khi khai báo.
-    Object: Chiếm bộ nhớ khi được tạo ra.
-
-    - Vai trò:
-    Class: Định nghĩa cấu trúc và hành vi của đối tượng.
-    Object: Sử dụng cấu trúc và hành vi đã được định nghĩa bởi class.
-
+    Đối với lập trình viên
+    Class:
+    Một Class là một khuôn mẫu trừu tượng tồn tại ở thời điểm biên dịch, Dựa vào định nghĩa Class, trình biên dịch (compiler) sẽ:
+        + Xác định Memory Layout
+        + Tạo Mã Thực thi
+        + Tạo meta data (V-table)
+    Object:
+        + Một Object là một thực thể cụ thể, một sự hiện thực hóa của Class
+        + Tiêu thụ Tài nguyên: Chiếm dụng bộ nhớ
+        + Class có state
+        + Con trỏ V-ptr
 
 2. Constructor là gì?
 	• Constructor là một hàm được gọi tự động khi một đối tượng được khởi tạo.
-	• Mục đích: Dùng để khởi tạo giá trị ban đầu cho các thành viên của lớp.
-	• Đặc điểm:
-		○ Có cùng tên với lớp.
-		○ Không có kiểu trả về, kể cả void.
-		○ Có thể được nạp chồng (Overloading).
+	• Mục đíchm, khởi tạo đối tượng:
+	    Query resource
+	    Khởi tạo giá trị
+
 
 3. Copy Constructor là gì?
 	• Copy Constructor là một constructor đặc biệt dùng để khởi tạo đối tượng mới từ một đối tượng đã tồn tại.
-	• Mục đích: Tạo bản sao của một đối tượng.
-	• Đặc điểm:
-		○ Có một tham số duy nhất là tham chiếu hằng tới đối tượng cùng loại (const ClassName&).
-		○ Được tự động cung cấp bởi trình biên dịch nếu không định nghĩa.
 
 4. Access Specifier là gì?
     Access Specifier trong C++ xác định mức độ truy cập của các thành viên trong một lớp. Có 3 loại:
         1. Public: Thành viên có thể truy cập từ bất kỳ đâu.
         2. Private: Thành viên chỉ có thể truy cập từ bên trong lớp.
         3. Protected: Thành viên truy cập được từ lớp cơ sở và lớp dẫn xuất.
+        Bất kỳ đâu: bên trong/ bên ngài class, từ class khác, từ class dẫn xuất
 
 
-5. Phân biệt overloading và overriding?
-	• Overloading là kỹ thuật cho phép tạo nhiều hàm hoặc toán tử có cùng tên nhưng khác nhau về tham số, phạm vi trong cùng 1 class hoặc namespace. Điều này giúp tăng tính đa hình ở mức compile-time
-	• Overriding là việc cung cấp một định nghĩa mới cho phương thức được thừa kế từ lớp cơ sở, cho phép lớp dẫn xuất tùy chỉnh hành vi của phương thức đó, có phạm vi kế thừa giữa các lớp. Đây là một dạng runtime polymorphism
+5. Phân biệt overloading và overriding in C++
+	Cả hai đều là kỹ thuật trong C++ để hiện thực hóa tính đa hình.
+    Một cái là đa hình tĩnh (compile-time), một cái là đa hình động (runtime).
+    Overloading (Đa hình tĩnh): Hoàn toàn dựa vào việc định danh qua tên naming identify. Các lời gọi hàm được link đến các  symbol cụ thể ngay trong quá trình linking
+    Overriding (Đa hình động): Phụ thuộc hoàn toàn vào metadata lúc chạy, chính là cặp đôi V-Table (dữ liệu của Class) và V-Ptr (dữ liệu của Object) để tra cứu và gọi đúng hàm.
+
 
 6. Hãy giải thích tại sao destructor cần được khai báo là virtual trong các lớp cơ sở khi làm việc với đa hình?
     Khi một lớp cơ sở có destructor không được khai báo là virtual, việc hủy đối tượng thông qua con trỏ lớp cơ sở sẽ chỉ gọi destructor của lớp cơ sở, mà không gọi destructor của lớp dẫn xuất.
@@ -123,116 +117,31 @@ b. Questions
     -> Nếu chưa thì compiler gắn cờ lớp dẫn xuất là abstract và báo lỗi nếu chúng ta cố gắng tạo đối tượng từ nó.
 
 13. Static data member và static member function là gì?
-    1. Static Data Member
-        • Biến thành viên (data member) khai báo với từ khóa static trong một lớp.
-        • Chỉ tồn tại một bản sao duy nhất của biến này được chia sẻ giữa tất cả các đối tượng của lớp.
-        • Biến này không thuộc về bất kỳ đối tượng cụ thể nào, mà thuộc về lớp.
+    1.
+    Trong một class của C++, từ khóa static có một mục đích: nó thay đổi sự liên kết của một thành viên từ việc thuộc về một object cụ thể sang việc thuộc về chính class đó.
+        + Định nghĩa ở ngoài class
 
-        • Đặc điểm:
-            ○ Không thể khởi tạo trong định nghĩa của lớp.
-            ○ Phải được khởi tạo bên ngoài lớp.
-            vd:
-                class MyClass
-                {
-                    static int count;
-                };
-                int MyClass::count = 0; // Khởi tạo static data member bên ngoài lớp
-            ○  Có thể truy cập qua đối tượng hoặc trực tiếp qua tên lớp.
-            ○  Dùng ClassName::member khi truy cập trực tiếp.
-        • Phạm vi sống:
-            Static data member tồn tại suốt chương trình, ngay cả khi không có đối tượng nào của lớp.
+    Static method thuộc về class và có thể được gọi trực tiếp thông qua tên class mà không cần tạo ra một object nào.
+        + Đinh nghĩa trực tiếp ở class
 
-    2. Static Member Function
-        • Hàm thành viên (member function) khai báo với từ khóa static trong một lớp.
-        • Hàm này không thể truy cập hoặc sử dụng các thành viên non-static (biến hoặc hàm) của lớp.
-        • Đặc điểm:
-            ○ Không cần đối tượng:
-            ○ Có thể gọi trực tiếp qua tên lớp mà không cần tạo đối tượng.
-            ○ Dùng cú pháp ClassName::functionName().
+        Note: chỉ nên có 1 translation unit define biến static, còn lại là declare với từ khóa extern
 
-        •Giới hạn:
-            Không thể sử dụng con trỏ this vì nó không thuộc bất kỳ đối tượng nào.
-            Chỉ có thể truy cập các thành viên static khác (biến hoặc hàm) của lớp.
+14. Khi nào sử dụng đa kế thừa?
+        + Khi bạn cần kết hợp các thuộc tính và hành vi từ nhiều lớp khác nhau.
+        + Khi bạn muốn tạo một lớp con có thể sử dụng các phương thức và thuộc tính của nhiều lớp cha.
+        + Khi bạn muốn tổ chức mã nguồn theo cách mà một lớp có thể kế thừa từ nhiều nguồn khác nhau.
+        + Khi bạn muốn tăng tính coupling của thiết kế (mỉa mai)
+        + Khi bạn muốn 1 design rất tệ (mỉa mai)
+        + Khi bạn muốn khó khăn khi chỉnh sửa (mỉa mai)
+        + Và làm ơn quên đa kế thừa đi, mà hãy chỉ lại design cho nó code clean (mỉa mai)
 
-        • Phạm vi sử dụng:
-            Thường được dùng để thực hiện các thao tác không phụ thuộc vào bất kỳ đối tượng cụ thể nào của lớp.
+        Thay vì một class là nhiều thứ (ví dụ: class SinhVienNangDong : public SinhVien, public VanDongVien), tốt hơn là class đó có nhiều thứ (ví dụ: class SinhVien có một object vai trò VanDongVien).
 
-        • Ví dụ:
-            class Math
-            {
-            public:
-                static int add(int a, int b)
-                {
-                    return a + b;
-                }
-            };
-
-            int main()
-            {
-                std::cout << Math::add(3, 5); // Output: 8
-                return 0;
-            }
-
-    14. Khi nào sử dụng đa kế thừa?
-        • Khi bạn cần kết hợp các thuộc tính và hành vi từ nhiều lớp khác nhau.
-        • Khi bạn muốn tạo một lớp con có thể sử dụng các phương thức và thuộc tính của nhiều lớp cha.
-        • Khi bạn muốn tổ chức mã nguồn theo cách mà một lớp có thể kế thừa từ nhiều nguồn khác nhau.
-
-        vd:
-            class A
-            {
-            public:
-                void funcA() {}
-            };
-
-            class B
-            {
-            public:
-                void funcB() {}
-            };
-
-            class C : public A, public B
-            {
-            public:
-                void funcC()
-                {
-                    funcA(); // Gọi từ lớp A
-                    funcB(); // Gọi từ lớp B
-                }
-            };
 
     15. Virtual inheritence là gì?
         • Virtual inheritance là một kỹ thuật trong C++ để giải quyết vấn đề "diamond problem" (vấn đề kim cương) trong đa kế thừa.
         • Khi một lớp kế thừa từ hai lớp cha mà cả hai đều kế thừa từ một lớp ông (grandparent), sẽ có hai bản sao của lớp ông trong lớp con.
         • Virtual inheritance đảm bảo rằng chỉ có một bản sao duy nhất của lớp ông được tạo ra trong lớp con, giúp tránh sự mơ hồ và xung đột khi truy cập các thành viên của lớp ông.
-
-        vd:
-            class A
-            {
-            public:
-                void funcA() {}
-            };
-
-            class B : virtual public A
-            {
-            public:
-                void funcB() {}
-            };
-
-            class C : virtual public A
-            {
-            public:
-                void funcC() {}
-            };
-
-            class D : public B, public C
-            {
-            public:
-                void funcD()
-                {
-                    funcA(); // Gọi từ lớp A (chỉ có một bản sao)
-                }
-            };
 
     16. Overloading destructor được không?
         • Không thể overload destructor trong C++.
@@ -240,91 +149,32 @@ b. Questions
         • Nếu bạn cần nhiều hành vi khác nhau khi hủy đối tượng, bạn có thể sử dụng các phương thức khác hoặc các tham số trong constructor.
 
     17. Shallow copy và deep copy là gì?
-        • Shallow copy: Sao chép các giá trị của các biến thành viên, nhưng không sao chép các đối tượng con trỏ mà chỉ sao chép địa chỉ. Điều này có thể dẫn đến vấn đề khi nhiều đối tượng cùng chia sẻ một vùng nhớ.
-        • Ví dụ:
-            class MyClass
-            {
-            public:
-                int* data;
-                MyClass(int value) { data = new int(value); }
-                ~MyClass() { delete data; }
-            };
+        Thường thì đại chúng sẽ nói về con trỏ và cấp phát động, kiểu như khi copy obj nhưng cái propety con trỏ của 2 obj vẫn trỏ về cũng 1 dynamic memory.
+        Nhưng tui thấy hoàn toàn không đủ.
+        Tui sẽ trừu tượng hơn là, Shallow copy chỉ copy data của obj chứ không có Resource Handle.
+            Resurce có thể là:
+                Một file đang mở trên đĩa.
+                Một kết nối mạng (network socket).
+                Mutex/lock.
+                Hardware SPI, UART...
 
-            MyClass obj1(10);
-            MyClass obj2 = obj1;
-        -> obj2.data và obj1.data đều trỏ đến cùng một vùng nhớ
-        -> Khi obj1 bị hủy, obj2.data sẽ trỏ đến vùng nhớ đã bị giải phóng, dẫn đến undefined behavior.
-
-        • Deep copy: Sao chép cả giá trị và nội dung của các đối tượng con trỏ, tạo ra một bản sao hoàn toàn độc lập. Điều này giúp tránh các vấn đề liên quan đến việc chia sẻ bộ nhớ.
-        • Ví dụ:
-            class MyClass
-            {
-            public:
-                int* data;
-                MyClass(int value) { data = new int(value); }
-                MyClass(const MyClass& other) { data = new int(*other.data); } // Deep copy
-                ~MyClass() { delete data; }
-            };
-
-            MyClass obj1(10);
-            MyClass obj2 = obj1; // Gọi copy constructor
-        -> obj2.data sẽ trỏ đến một vùng nhớ mới, chứa giá trị 10.
-        -> Khi obj1 bị hủy, obj2.data vẫn còn hợp lệ và không bị ảnh hưởng.
 
     18. So sánh struct và class và union?
+    Là 3 key word trong C++ để tạo ra user defined type,  data type tạo ra từ mõi key word có những bản sắc và ứng dụng khác nhau
+    Ở mức kỹ thuật và triết lý thiết kế và mục đích sử dụng
     - Struct:
-        • Là một kiểu dữ liệu dùng để nhóm các biến khác nhau lại với nhau.
-        • Mặc định, các thành viên của struct có phạm vi truy cập public.
-        • Thường được sử dụng để lưu trữ dữ liệu đơn giản.
+         Đóng gói dữ liệu thụ động
+         Kích thước là tổng kích thước các thành viên (cộng với padding)
+         "Đây là một túi chứa dữ liệu."
 
-        vd:
-            struct Point
-            {
-                int x;
-                int y;
-            };
     - Class:
-        • Là một kiểu dữ liệu phức tạp hơn, cho phép định nghĩa các thuộc tính và phương thức.
-        • Mặc định, các thành viên của class có phạm vi truy cập private.
-        • Hỗ trợ tính đa hình, kế thừa và đóng gói (encapsulation).
-
-        vd:
-            class Circle
-            {
-            private:
-                double radius;
-            public:
-                Circle(double r) : radius(r) {}
-                double area() { return 3.14 * radius * radius; }
-            };
+        Kiến tạo thực thể tự trị
+        Kích thước là tổng kích thước các thành viên (cộng với padding). Nếu class có hàm virtual, kích thước của mỗi đối tượng sẽ cộng thêm kích thước của một con trỏ v-pointer.
+        "Đây là một thực thể sống có hành vi và state độc lập"
 
     - Union:
-        • Là một kiểu dữ liệu đặc biệt cho phép lưu trữ nhiều kiểu dữ liệu khác nhau trong cùng một vùng nhớ, nhưng chỉ có thể sử dụng một kiểu tại một thời điểm.
-        • Kích thước của union bằng kích thước của thành viên lớn nhất.
-        • Thường được sử dụng để tiết kiệm bộ nhớ khi cần lưu trữ các kiểu dữ liệu khác nhau.
-
-        vd:
-            union Data
-            {
-                int intValue;
-                float floatValue;
-                char charValue;
-            };
-        -> Chỉ có thể sử dụng một trong ba thành viên này tại một thời điểm.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+         Tối ưu hóa & diễn giải bộ nhớ
+         "Đây là một vùng nhớ được tối ưu hóa cho nhiều mục đích khác nhau."
 
 
 
@@ -336,16 +186,24 @@ a. Fundamental knowledge
 -------------------------------------------------------------------------------
 Các vùng bộ nhớ:
 1. Code Segment (Text Segment)
+    Một vùng nhớ vật lý
+    Yêu cầu memory map
+    CPU có thể dùng các tập lênh để trực tiếp access vào vùng nhớ đó (Nhúng/Firmware)
+    Linker script (để sắp xếp các section vào đúng địa chỉ) (Nhúng/Firmware)
 	• Mục đích: Lưu trữ mã lệnh chương trình (binaries) sau khi được biên dịch.
 	• Đặc điểm:
 		○ Là vùng chỉ đọc để bảo vệ mã chương trình tránh bị sửa đổi trong runtime.
 		○ Kích thước cố định, được xác định tại thời điểm biên dịch.
 
 2. Static/Global Segment (Data Segment)
-	- Initialized Data Segment
+    Initialized Data Segment:
+	Yêu cầu memory map
+    CPU có thể dùng các tập lênh để trực tiếp access vào vùng nhớ đó
+    Yêu cầu có bootloader or startup code viết bằng asm language đê init data, và dựa vào linker script để xác định các section (Nhúng/Firmware)
 	• Mục đích: Lưu trữ các biến toàn cục (global) hoặc static đã được khởi tạo giá trị.
 	• Đặc điểm: Bộ nhớ được cấp phát khi chương trình bắt đầu chạy và giải phóng khi chương trình kết thúc.
-	- Uninitialized Data Segment (BSS - Block Started by Symbol)
+
+    Uninitialized Data Segment (BSS - Block Started by Symbol)
 	• Mục đích: Lưu trữ các biến toàn cục hoặc static chưa được khởi tạo.
 	• Đặc điểm: Được khởi tạo mặc định về giá trị 0.
 
@@ -363,11 +221,8 @@ Các vùng bộ nhớ:
 		○ Có kích thước lớn hơn stack, nhưng tốc độ truy cập chậm hơn.
 
 5. CPU Registers
-	• Mục đích: Lưu trữ các biến và giá trị tạm thời cần tốc độ truy cập cực nhanh.
-	• Đặc điểm:
-		○ Dung lượng nhỏ, phụ thuộc vào kiến trúc CPU.
-		○ Không thể truy cập trực tiếp từ mã C++ (quản lý bởi trình biên dịch).
-	• Ví dụ: Trình biên dịch có thể tối ưu sử dụng thanh ghi cho các biến trong vòng lặp.
+	Là các biến được lưu ở CPU register, thường là do compiler tự tối ưu, cũng có các keyword để hint cho compiler là hãy để biến vào cpu register, nhưng MISRA rule không khuyến khích.
+	Các biến này không được memory mapping
 
 --------------------------------------------------------------------------------
 Quá trình build chương trình C/C++:
@@ -390,29 +245,12 @@ Quá trình build chương trình C/C++:
 ---------------------------------------------------------------------------------
 b. Questions
 1. So sánh new và malloc?
-    + Cấp phát bộ nhớ:
-    new: Cấp phát bộ nhớ và gọi constructor để khởi tạo đối tượng.
-    malloc: Chỉ cấp phát bộ nhớ; không gọi constructor.
+    + New là một toán tử (operator) của C++, thực thi một quy trình kiến tạo đối tượng hai bước: đầu tiên nó cấp phát đủ bộ nhớ, sau đó gọi hàm tạo (constructor) để biến vùng nhớ đó thành một đối tượng hoàn chỉnh. Nó an toàn về kiểu, xử lý lỗi bằng ngoại lệ, và có thể được nạp chồng.
 
-    + Giải phóng bộ nhớ:
-    new: Sử dụng delete để giải phóng và gọi destructor.
-    malloc: Sử dụng free để giải phóng; không gọi destructor.
+    + Malloc là một hàm (function) kế thừa từ C, chỉ thực hiện một nhiệm vụ duy nhất: yêu cầu cấp phát một khối bộ nhớ thô theo kích thước được chỉ định. Nó không nhận biết về kiểu dữ liệu, không gọi hàm tạo, và báo lỗi bằng cách trả về con trỏ NULL.
 
-    + Kích thước bộ nhớ:
-    new: Tự động xác định kích thước từ kiểu dữ liệu.
-    malloc: Cần chỉ định rõ kích thước bộ nhớ (sử dụng sizeof).
+    Tóm lại, sự khác biệt cơ bản là: new tạo ra một Đối tượng (Object) có sự sống, trong khi malloc chỉ trả về một Vùng nhớ (Memory Region) trơ.
 
-    + Kiểu trả về:
-    new: Trả về con trỏ đúng kiểu dữ liệu (type-safe).
-    malloc: Trả về con trỏ void* (không type-safe, cần cast kiểu).
-
-    + Xử lý lỗi:
-    new: Ném ngoại lệ std::bad_alloc nếu không cấp phát được.
-    malloc: Trả về nullptr nếu không cấp phát được.
-
-    + Custom Memory Allocators:
-    new: Có thể tùy chỉnh qua việc overload new/delete.
-    malloc: Không thể tùy chỉnh trực tiếp như new.
 
 2. So sánh delete và free?
     delete: Giải phóng bộ nhớ và gọi destructor của đối tượng.
@@ -427,19 +265,31 @@ b. Questions
 3. So sánh giữa Static và Dynamic Memory Allocation
 
     + Thời điểm cấp phát:
-    Static: Cấp phát bộ nhớ tại thời điểm biên dịch (compile-time).
+    Static: Cấp phát bộ nhớ tại thời điểm biên dịch (compile-time). -> phải sửa thành: trước khi gọi hàm main()
     Dynamic: Cấp phát bộ nhớ tại thời điểm chạy (run-time).
 
     + Vị trí bộ nhớ:
-    Static: Sử dụng bộ nhớ trên Stack hoặc Global Memory.
+    Static: Có thể bất kì memory section có khả năng memory map tùy vào dặt tính của biến và compiler
+        Các biến tĩnh đã khởi tạo (int a = 10;) sẽ nằm trong section .data (thường ở RAM).
+        Các biến tĩnh chưa khởi tạo (int b;) sẽ nằm trong section .bss (cũng ở RAM).
+        Các hằng số tĩnh (const static int c = 20;) có thể được tối ưu đặt trong section .rodata (read-only data, thường ở Flash).
     Dynamic: Sử dụng bộ nhớ trên Heap.
 
     + Quản lý bộ nhớ:
     Static: Quản lý bộ nhớ tự động bởi chương trình.
     Dynamic: Quản lý bộ nhớ thủ công (sử dụng new/delete hoặc malloc/free).
 
+    NOTE: Bộ nhớ trên Stack KHÔNG phải là Static Allocation. Stack allocation là một dạng cấp phát tự động (automatic storage duration) có vòng đời gắn liền với scope của hàm.
+
+     Static Storage Duration
+     Automatic Storage Duration
+     Dynamic Storage Duration
+     Thread Storage Duration
+
 4. Điểm khác biệt giữa C và C++
+    Triết lý của C là cung cấp một "hợp ngữ cấp cao" (high-level assembly), cho phép lập trình viên thao tác trực tiếp và hiệu quả với bộ nhớ. Trong khi đó, triết lý của C++ là xây dựng các tầng trừu tượng mạnh mẽ, an toàn và có khả năng biểu đạt cao mà không làm mất đi hiệu năng
     Về phong cách lập trình, C++ thiên về hướng đối tượng, còn C sẽ là hướng thủ tục.
+    ->> Phản biện: C++ là một ngôn ngữ đa hệ hình (multi-paradigm). Một lập trình viên C++ giỏi có thể viết code theo hướng thủ tục, hướng đối tượng, lập trình tổng quát (generic), và cả hướng chức năng (functional). Việc chỉ coi C++ là OOP cho thấy một cái nhìn chưa toàn diện.
     C chỉ hổ trợ quản lí bộ nhớ thủ công bằng cách dùng malloc và free, trong khi C++ cung cấp cả thủ công và tự động, với các từ khóa như new, delete,...
     C++ hỗ trợ thêm class, throw exception, overloading và các thư viện STL.
 
@@ -448,7 +298,15 @@ b. Questions
     Từ C++11 lên C++14 hoặc C++17 -> Thêm make_unique, thêm các option cho lambda function
 
 6. Lỗi stack overflow là gì?
-    Lỗi stack overflow xảy ra khi chương trình sử dụng quá nhiều bộ nhớ trên stack, vượt quá giới hạn được hệ thống cấp phát. Stack là vùng nhớ dùng để lưu trữ các biến cục bộ và thông tin gọi hàm.
+   "Stack overflow là một lỗi runtime, xảy ra khi chương trình cố gắng sử dụng nhiều bộ nhớ trên stack hơn so với dung lượng đã được hệ điều hành cấp phát trước cho luồng (thread) đó.
+
+   Nguyên nhân chính bao gồm:
+
+   + Đệ quy quá sâu hoặc vô hạn (Deep or infinite recursion): Đây là nguyên nhân phổ biến nhất. Mỗi lần gọi hàm đe quy sẽ tạo ra một stack frame mới, làm cho stack nhanh chóng bị lấp đầy.
+   + Khai báo các biến cục bộ có kích thước quá lớn (Very large local variables): Ví dụ, khai báo một mảng lớn ngay trên stack như int large_array[1000000]; có thể ngay lập tức làm tràn stack.
+
+   Cơ chế phát hiện thường là do con trỏ stack truy cập vào một vùng nhớ bảo vệ (guard page) nằm ngay sau giới hạn stack, gây ra một lỗi phần cứng mà hệ điều hành sẽ xử lý và kết thúc chương trình.
+
 
 7. Delete[] và delete khác nhau thế nào?
     - delete:
